@@ -6,9 +6,6 @@ html {
 	background-size: cover;
 	background-color: #1e1f1e;
     font-family: 'Darker Grotesque', sans-serif;
-	scroll-snap-type: mandatory;
-    scroll-snap-points-y: repeat(100vh);
-    scroll-snap-type: y mandatory;
 }
 
 body, h1, html {
@@ -107,11 +104,6 @@ a.not-active {
 	cursor: default;
 	text-decoration: none;
 }
-
-/*a.button:hover {
-	background-color: #acacad;
-	color: white;
-}*/
 
 @media screen and (max-width: 800px) {
     h1 {
