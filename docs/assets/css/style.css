@@ -1,0 +1,8 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: Darker Grotesque, Cabin,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-weight: 700;
+  margin: 0 0 35px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
