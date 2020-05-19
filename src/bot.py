@@ -4,7 +4,7 @@ from textblob import TextBlob
 from os import environ
 
 C_KEY = environ['C_KEY']
-C_SECRET = environ['C_SECRET']e
+C_SECRET = environ['C_SECRET']
 A_TOKEN = environ['A_TOKEN']
 A_TOKEN_SECRET = environ['A_TOKEN_SECRET']
 
@@ -16,10 +16,17 @@ def authenticate():
 
 
 def tweet(api, status):
-    try:
-        api.update_status(status)
-    except tweepy.TweepError as e:
-        print(e.reason)
+    if isinstance(status, list):
+        for t in status:
+            try:
+                api.update_status(t)
+            except tweepy.TweepError as e:
+                print(e.reason)
+    else:
+        try:
+            api.update_status(status)
+        except tweepy.TweepError as e:
+            print(e.reason)
 
 
 def set_line_ptr(line):
@@ -43,7 +50,7 @@ def get_line_ptr():
 
 def get_line():
     curr_line = get_line_ptr()
-    with open('test_text.txt') as file:  # TODO: change file
+    with open('meditations.txt') as file:
         lines = TextBlob(file.read())
     status = str(lines.sentences[curr_line]).replace('\n', ' ').strip()
     set_line_ptr(curr_line + 1)
@@ -69,7 +76,6 @@ def find_split_index(status):
         '?': list(find_all(status, '?')),
         '!': list(find_all(status, '!'))
     }
-    # print(indices)
     index_value_list = list()
     for key, value in indices.items():
         for i in value:
@@ -87,9 +93,7 @@ def find_split_index(status):
 
 
 def split_status(status):
-    # print(status + '\n')
     index = find_split_index(status)
-    # print('\n' + 'SPLIT INDEX: ' + str(index))
     tweets_list = []
     tweet1 = status[:index + 1] + '...'
     tweet2 = status[index + 2:].strip()
@@ -97,48 +101,37 @@ def split_status(status):
     tweets_list.append(tweet2)
 
     if len(tweet1) < 240 and len(tweet2) < 240:
-        # print('\n' + 'REMAINING TWEETS ARE < 240 CHARS' + '\n')
         return tweets_list
     else:
         if len(tweet1) > 240:
-            # extra_split_status = split_status(tweet1)
-            # tweets_list.append(split_status(tweet1))
             tweets_list[0] = split_status(tweet1)
         if len(tweet2) > 240:
-            # extra_split_status = split_status(tweet2)
-            # tweets_list.append(split_status(tweet2))
             tweets_list[1] = split_status(tweet2)
 
     return tweets_list
 
 
 def flatten_nested_list(nested_list):
-    """ Converts a nested list to a flat list """
     flat_list = []
-    # Iterate over all the elements in given list
     for elem in nested_list:
-        # Check if type of element is list
         if isinstance(elem, list):
-            # Extend the flat list by adding contents of this element (list)
             flat_list.extend(flatten_nested_list(elem))
         else:
-            # Append the element to the list
             flat_list.append(elem)
 
     return flat_list
 
 
 def main():
-    # api = authenticate() TODO: for when the app is done
+    # api = authenticate()
+    api = ''
     status = get_line()
     if len(status) > 240:
         cleaned_status_list = split_status(status)
         flattened_status = flatten_nested_list(cleaned_status_list)
-        print(flattened_status)
-
+        tweet(api, flattened_status)
     else:
-        print(status)
-    # tweet(api, status) TODO: for when the app is done
+        tweet(api, status)
 
 
 if __name__ == "__main__":

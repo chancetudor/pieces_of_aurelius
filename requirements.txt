@@ -1,4 +1,3 @@
 tweepy
 textblob
-statistics
-os
+flask
