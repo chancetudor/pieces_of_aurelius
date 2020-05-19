@@ -9,7 +9,6 @@ jdcal==1.4.1
 Jinja2==2.11.2
 joblib==0.15.1
 MarkupSafe==1.1.1
-nltk==3.5
 oauthlib==3.1.0
 openpyxl==3.0.3
 PySocks==1.7.1
