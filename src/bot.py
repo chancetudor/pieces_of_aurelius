@@ -1,8 +1,12 @@
-import re
 import tweepy
 import statistics
 from textblob import TextBlob
-from secrets import *
+from os import environ
+
+C_KEY = environ['C_KEY']
+C_SECRET = environ['C_SECRET']e
+A_TOKEN = environ['A_TOKEN']
+A_TOKEN_SECRET = environ['A_TOKEN_SECRET']
 
 
 def authenticate():
