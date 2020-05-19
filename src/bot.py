@@ -123,8 +123,7 @@ def flatten_nested_list(nested_list):
 
 
 def main():
-    # api = authenticate()
-    api = ''
+    api = authenticate()
     status = get_line()
     if len(status) > 240:
         cleaned_status_list = split_status(status)
