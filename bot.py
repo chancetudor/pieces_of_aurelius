@@ -153,7 +153,6 @@ def main():
         tweet(api, flattened_status)
     else:
         tweet(api, status)
-    sleep(86400)
 
 
 if __name__ == "__main__":
