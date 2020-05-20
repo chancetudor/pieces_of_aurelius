@@ -20,11 +20,9 @@ def authenticate():
 
 def tweet(api, status):
     if isinstance(status, list):
-        for t in range(len(status)):
+        for t in status:
             try:
-                x = api.update_status(status[t], tweet_mode='extended')
-                if t != len(status):
-                    api.update_status(status[t + 1], in_reply_to_status_id=x.id, tweet_mode='extended')
+                api.update_status(t, tweet_mode='extended')
             except tweepy.TweepError as e:
                 print(e.reason)
     else:
