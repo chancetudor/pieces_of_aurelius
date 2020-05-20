@@ -4,6 +4,7 @@ import os
 import psycopg2
 from textblob import TextBlob
 from os import environ
+from time import sleep
 
 C_KEY = environ['C_KEY']
 C_SECRET = environ['C_SECRET']
@@ -152,6 +153,7 @@ def main():
         tweet(api, flattened_status)
     else:
         tweet(api, status)
+    sleep(86400)
 
 
 if __name__ == "__main__":
