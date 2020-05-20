@@ -69,13 +69,11 @@ def get_line_ptr():
 
 def get_line():
     curr_line = get_line_ptr()
-    print(type(curr_line))
-    print(curr_line)
     if curr_line == -1 or curr_line is None:
         exit(-1)
     with open('meditations.txt') as file:
         lines = TextBlob(file.read())
-    status = str(lines.sentences[curr_line]).replace('\n', ' ').strip()
+    status = str(lines.sentences[curr_line[0]]).replace('\n', ' ').strip()
     set_line_ptr(curr_line + 1)
 
     return status
