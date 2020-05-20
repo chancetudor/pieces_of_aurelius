@@ -64,7 +64,7 @@ def get_line_ptr():
         if db is not None:
             db.close()
 
-    return curr_line
+    return curr_line[0]
 
 
 def get_line():
