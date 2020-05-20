@@ -38,7 +38,7 @@ def set_line_ptr(line):
         db = psycopg2.connect(DATABASE_URL, sslmode='require')
         update_query = "UPDATE curr_line SET line = %s"
         curr = db.cursor()
-        curr.execute(update_query, line)
+        curr.execute(update_query, (line,))
         db.commit()
         curr.close()
     except (Exception, psycopg2.DatabaseError) as error:
