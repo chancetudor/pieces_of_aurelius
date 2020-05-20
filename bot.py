@@ -56,7 +56,7 @@ def get_line_ptr():
         select_query = "SELECT line FROM curr_line"
         curr = db.cursor()
         curr.execute(select_query)
-        db.commit()
+        curr_line = curr.fetchone()[0]
         curr.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -69,7 +69,7 @@ def get_line_ptr():
 
 def get_line():
     curr_line = get_line_ptr()
-    if curr_line == -1:
+    if curr_line == -1 or curr_line is None:
         exit(-1)
     with open('meditations.txt') as file:
         lines = TextBlob(file.read())
