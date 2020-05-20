@@ -56,7 +56,7 @@ def get_line_ptr():
         select_query = "SELECT line FROM curr_line"
         curr = db.cursor()
         curr.execute(select_query)
-        curr_line = curr.fetchone()[0]
+        curr_line = curr.fetchone()
         curr.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
