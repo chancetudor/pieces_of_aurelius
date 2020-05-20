@@ -1,5 +1,7 @@
 import tweepy
 import statistics
+import os
+import psycopg2
 from textblob import TextBlob
 from os import environ
 
@@ -7,6 +9,7 @@ C_KEY = environ['C_KEY']
 C_SECRET = environ['C_SECRET']
 A_TOKEN = environ['A_TOKEN']
 A_TOKEN_SECRET = environ['A_TOKEN_SECRET']
+DATABASE_URL = os.environ['DATABASE_URL']
 
 
 def authenticate():
@@ -30,26 +33,44 @@ def tweet(api, status):
 
 
 def set_line_ptr(line):
-    with open('curr_line.txt', 'w+') as out_file:
-        out_file.write(str(line))
+    db = None
+    try:
+        db = psycopg2.connect(DATABASE_URL, sslmode='require')
+        update_query = "UPDATE curr_line SET line = %s"
+        curr = db.cursor()
+        curr.execute(update_query, line)
+        db.commit()
+        curr.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if db is not None:
+            db.close()
 
 
 def get_line_ptr():
+    db = None
+    curr_line = -1
     try:
-        with open('curr_line.txt') as f:
-            curr_line = f.read()
-            try:
-                return int(curr_line)
-            except ValueError:
-                return 0
-    except FileNotFoundError:
-        f = open('curr_line.txt', 'w+')
-        f.close()
-        return 0
+        db = psycopg2.connect(DATABASE_URL, sslmode='require')
+        select_query = "SELECT line FROM curr_line"
+        curr = db.cursor()
+        curr.execute(select_query)
+        db.commit()
+        curr.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if db is not None:
+            db.close()
+
+    return curr_line
 
 
 def get_line():
     curr_line = get_line_ptr()
+    if curr_line == -1:
+        exit(-1)
     with open('meditations.txt') as file:
         lines = TextBlob(file.read())
     status = str(lines.sentences[curr_line]).replace('\n', ' ').strip()
