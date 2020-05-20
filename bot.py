@@ -74,7 +74,7 @@ def get_line():
     with open('meditations.txt') as file:
         lines = TextBlob(file.read())
     status = str(lines.sentences[curr_line[0]]).replace('\n', ' ').strip()
-    set_line_ptr(curr_line + 1)
+    set_line_ptr(curr_line[0] + 1)
 
     return status
 
