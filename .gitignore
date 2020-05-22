@@ -114,3 +114,4 @@ dmypy.json
 .pyre/
 src/secrets.py
 secrets.py
+.DS_Store
