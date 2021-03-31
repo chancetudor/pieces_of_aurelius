@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Home - Chance Tudor</title>
+    <title>Pieces of Aurelius - Chance Tudor</title>
     <meta name="description" content="My name is Chance Tudor and I'm a programmer and music lover. I write primarily in C, C++, and Python. Future cybersecurity analyst.">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
@@ -41,7 +41,7 @@
     </header>
     <footer>
         <div class="container text-center">
-            <p>Copyright ©&nbsp;Chance Tudor 2020</p>
+            <p>© <span id="year"></span><span> Chance Tudor</span></p>
         </div>
     </footer>
     <script src="assets/js/jquery.min.js"></script>
@@ -49,6 +49,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="assets/js/script.js"></script>
     <script src="https://www.retainable.io/assets/retainable/rss-embed/retainable-rss-embed.js"></script>
+	<script> document.getElementById("year").innerHTML = new Date().getFullYear(); </script>
 </body>
 
 </html>
